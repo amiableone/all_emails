@@ -7,7 +7,11 @@ class Account(models.Model):
 
 
 class Message(models.Model):
-    account = models.ForeignKey(Account, on_delete=models.CASCADE)
+    account = models.ForeignKey(
+        Account,
+        on_delete=models.CASCADE,
+        related_name="messages",
+    )
     subject = models.CharField(max_length=255)
     date_sent = models.DateTimeField()
     date_received = models.DateTimeField()
