@@ -164,3 +164,6 @@ cython_debug/
 # venv
 pyvenv.cfg
 Scripts/*
+
+# Google API access
+client_secret.json
