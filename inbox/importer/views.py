@@ -16,7 +16,9 @@ from .utils import (
 
 class GoogleAuthView(View):
     def get(self, request, *args, **kwargs):
-        login = request.user.email
+        # session["email_account"] is set to email provided by the user
+        # via the form handled by AddAccountView.
+        login = request.session["email_account"]
         # Tell Google's OAuth2.0 server to redirect to redirect_uri
         # on user consent being granted.
         redirect_uri = reverse("importer:complete-google-oauth")
