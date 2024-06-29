@@ -5,7 +5,9 @@ from django.http import (
 from django.shortcuts import render
 from django.urls import reverse
 from django.views import View
+from django.views.generic import CreateView
 
+from . import models
 from .utils import (
     google_oauth2,
     google_oauth2_cb,
@@ -37,3 +39,24 @@ class CompleteGoogleAuthView(View):
         credentials = google_oauth2_cb(state, redirect_uri, auth_resp)
         request.session["credentials"] = credentials
         return HttpResponseRedirect(reverse("importer:create-gmail"))
+
+
+class CreateGmailAccount(CreateView):
+    model = models.Account
+    fields = ["credentials"]
+    success_url = None  # to be provided.
+
+    def post(self, request, *args, **kwargs):
+        credentials = request.session["credentials"]
+        form = self.get_form_class({"credentials": credentials})
+        email = request.user.email
+        if form.is_valid():
+            form.instance.email = email
+            form.save()
+            return HttpResponseRedirect(self.success_url)
+        else:
+            return HttpResponseRedirect(
+                # in the AddAccountView.get() render a form with an error
+                # telling that the authentication failed.
+                reverse("importer:add-account", args=(email,))
+            )
