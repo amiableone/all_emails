@@ -1,9 +1,15 @@
-from django.http import HttpResponseRedirect
+from django.http import (
+    HttpRequest,
+    HttpResponseRedirect,
+)
 from django.shortcuts import render
 from django.urls import reverse
 from django.views import View
 
-from .utils import google_oauth2
+from .utils import (
+    google_oauth2,
+    google_oauth2_cb,
+)
 
 
 class GoogleAuthView(View):
@@ -20,3 +26,14 @@ class GoogleAuthView(View):
         request.session["state"] = state
         request.session.modified = True
         return HttpResponseRedirect(auth_url)
+
+
+class CompleteGoogleAuthView(View):
+    def get(self, request, *args, **kwargs):
+        request: HttpRequest
+        state = request.session["state"]
+        redirect_uri = reverse("importer:complete-google-oauth")
+        auth_resp = request.resolver_match
+        credentials = google_oauth2_cb(state, redirect_uri, auth_resp)
+        request.session["credentials"] = credentials
+        return HttpResponseRedirect(reverse("importer:create-gmail"))
