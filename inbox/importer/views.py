@@ -47,11 +47,19 @@ class CreateGmailAccount(CreateView):
     success_url = None  # to be provided.
 
     def post(self, request, *args, **kwargs):
+        # session["email_account"] is set to email provided by the user
+        # via the form handled by AddAccountView.
+        email = request.session["email_account"]
         credentials = request.session["credentials"]
-        form = self.get_form_class({"credentials": credentials})
-        email = request.user.email
+        form = self.get_form_class(
+            {
+                "email": email,
+                "credentials": credentials,
+            }
+        )
+        user = request.user
         if form.is_valid():
-            form.instance.email = email
+            form.instance.user = user
             form.save()
             return HttpResponseRedirect(self.success_url)
         else:
