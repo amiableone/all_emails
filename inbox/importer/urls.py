@@ -4,6 +4,11 @@ from . import views
 
 appname = "importer"
 urlpatterns = [
+    path(
+        "add-account/",
+        views.AddAccountView.as_view(),
+        name="add-account",
+    ),
     path("add-gmail/", views.GoogleAuthView.as_view(), name="add-gmail"),
     path(
         "google-oauth-cb",
