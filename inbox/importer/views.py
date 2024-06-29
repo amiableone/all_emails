@@ -58,5 +58,5 @@ class CreateGmailAccount(CreateView):
             return HttpResponseRedirect(
                 # in the AddAccountView.get() render a form with an error
                 # telling that the authentication failed.
-                reverse("importer:add-account", args=(email,))
+                reverse("importer:add-account", kwargs={"email": email})
             )
