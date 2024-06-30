@@ -5,7 +5,7 @@ from django.http import (
 from django.shortcuts import render
 from django.urls import reverse
 from django.views import View
-from django.views.generic import CreateView
+from django.views.generic import CreateView, ListView
 
 from . import models
 from .forms import AddAccountForm
@@ -13,6 +13,21 @@ from .utils import (
     google_oauth2,
     google_oauth2_cb,
 )
+
+
+class EmailsView(ListView):
+    paginate_by = 100
+    template_name = "emails.html"
+
+    def get(self, request, *args, **kwargs):
+        if not request.user.is_authenticated:
+            return HttpResponseRedirect(reverse("importer:login"))
+        return super().get(request, *args, **kwargs)
+
+    def get_queryset(self):
+        user = self.request.user
+        qs = models.Message.objects.filter(account__user=user)
+        return qs
 
 
 class AddAccountView(View):
