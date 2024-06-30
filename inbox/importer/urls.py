@@ -1,9 +1,15 @@
+from django.contrib.auth import views as auth_views
 from django.urls import path
 
 from . import views
 
 appname = "importer"
 urlpatterns = [
+    path(
+        "login/",
+        auth_views.LoginView.as_view(template_name="importer/login.html"),
+        name="login",
+    ),
     path("emails/", views.EmailsView.as_view(), name="emails"),
     path(
         "add-account/",
