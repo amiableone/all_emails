@@ -6,12 +6,14 @@ class Account(models.Model):
     class Platforms(models.TextChoices):
         YANDEX = "yandex"
         GMAIL = "gmail"
-        MAILRU = "mail.ru"
+        MAILRU = "mail.ru", "Mail.ru"
 
     user = models.ForeignKey(
         settings.AUTH_USER_MODEL,
         on_delete=models.CASCADE,
     )
+    # email ending doesn't always allow to determine the
+    # platform correctly.
     platform = models.CharField(choices=Platforms)
     email = models.EmailField()
     credentials = models.JSONField()
