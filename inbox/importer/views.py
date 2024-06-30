@@ -45,7 +45,7 @@ class CompleteGoogleAuthView(View):
 
 class CreateAccountView(CreateView):
     model = models.Account
-    fields = ["email", "credentials"]
+    fields = ["platform", "email", "credentials"]
     success_url = "/emails/"
 
     def get(self, request, *args, **kwargs):
@@ -54,12 +54,14 @@ class CreateAccountView(CreateView):
         return HttpResponseRedirect(reverse("importer:login"))
 
     def post(self, request, *args, **kwargs):
-        # session["email_account"] is set to email provided by the user
-        # via the form handled by AddAccountView.
+        # platform and email values are set in AddAccountView.
+        # credentials is set in CompleteGoogleAuthView.
+        platform = request.session["platform"]
         email = request.session["email_account"]
         credentials = request.session["credentials"]
         form = self.get_form_class(
             {
+                "platform": platform,
                 "email": email,
                 "credentials": credentials,
             }
