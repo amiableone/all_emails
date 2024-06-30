@@ -11,7 +11,7 @@ urlpatterns = [
     ),
     path("add-gmail/", views.GoogleAuthView.as_view(), name="add-gmail"),
     path(
-        "google-oauth-cb",
+        "google-oauth-cb/",
         views.CompleteGoogleAuthView.as_view(),
         name="complete-google-oauth",
     ),
