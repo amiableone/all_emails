@@ -4,6 +4,7 @@ from . import views
 
 appname = "importer"
 urlpatterns = [
+    path("emails/", views.EmailsView.as_view(), name="emails"),
     path(
         "add-account/",
         views.AddAccountView.as_view(),
