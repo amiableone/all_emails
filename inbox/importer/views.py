@@ -43,10 +43,15 @@ class CompleteGoogleAuthView(View):
         return HttpResponseRedirect(reverse("importer:create-gmail"))
 
 
-class CreateGmailAccount(CreateView):
+class CreateAccountView(CreateView):
     model = models.Account
-    fields = ["credentials"]
-    success_url = None  # to be provided.
+    fields = ["email", "credentials"]
+    success_url = "/emails/"
+
+    def get(self, request, *args, **kwargs):
+        if request.user.is_authenticated:
+            return self.post(self, request, *args, **kwargs)
+        return HttpResponseRedirect(reverse("importer:login"))
 
     def post(self, request, *args, **kwargs):
         # session["email_account"] is set to email provided by the user
@@ -67,6 +72,6 @@ class CreateGmailAccount(CreateView):
         else:
             return HttpResponseRedirect(
                 # in the AddAccountView.get() render a form with an error
-                # telling that the authentication failed.
+                # message about failed authentication.
                 reverse("importer:add-account", kwargs={"email": email})
             )
