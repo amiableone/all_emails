@@ -8,10 +8,28 @@ from django.views import View
 from django.views.generic import CreateView
 
 from . import models
+from .forms import AddAccountForm
 from .utils import (
     google_oauth2,
     google_oauth2_cb,
 )
+
+
+class AddAccountView(View):
+    form_class = AddAccountForm
+    def get(self, request, *args, **kwargs):
+        form = self.form_class()
+        return render(request, "add_account.html", {"form": form})
+
+    def post(self, request, *args, **kwargs):
+        form = self.form_class(request.POST)
+        if form.is_valid():
+            platform = form.cleaned_data["platform"]
+            email = form.cleaned_data["email"]
+            request.session["platform"] = platform
+            request.session["email_account"] = email
+            return HttpResponseRedirect(reverse("importer:add-gmail"))
+        return render(request, "add_account.html", {"form": form})
 
 
 class GoogleAuthView(View):
