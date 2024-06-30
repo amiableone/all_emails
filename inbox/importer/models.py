@@ -3,10 +3,16 @@ from django.conf import settings
 
 
 class Account(models.Model):
+    class Platforms(models.TextChoices):
+        YANDEX = "yandex"
+        GMAIL = "gmail"
+        MAILRU = "mail.ru"
+
     user = models.ForeignKey(
         settings.AUTH_USER_MODEL,
         on_delete=models.CASCADE,
     )
+    platform = models.CharField(choices=Platforms)
     email = models.EmailField()
     credentials = models.JSONField()
 
