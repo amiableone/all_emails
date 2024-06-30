@@ -54,10 +54,14 @@ class GoogleAuthView(View):
 
 class CompleteGoogleAuthView(View):
     def get(self, request, *args, **kwargs):
+        # This method will be called on request from Google OAuth2.0
+        # server after successful authentication.
         request: HttpRequest
         state = request.session["state"]
-        redirect_uri = reverse("importer:complete-google-oauth")
-        auth_resp = request.resolver_match
+        redirect_uri = request.build_absolute_uri(
+            reverse("importer:complete-google-oauth")
+        )
+        auth_resp = request.build_absolute_uri()
         credentials = google_oauth2_cb(state, redirect_uri, auth_resp)
         request.session["credentials"] = credentials
         return HttpResponseRedirect(reverse("importer:create-gmail"))
