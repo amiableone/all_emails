@@ -38,12 +38,15 @@ class GoogleAuthView(View):
         email = request.session["email_account"]
         # Tell Google's OAuth2.0 server to redirect to redirect_uri
         # on user consent being granted.
-        redirect_uri = reverse("importer:complete-google-oauth")
+        request: HttpRequest
+        redirect_uri = request.build_absolute_uri(
+            reverse("importer:complete-google-oauth")
+        )
         auth_url, state = google_oauth2(email, redirect_uri)
         # Pass state as session parameter to protect from CSRF by passing
-        # the parameter value from CompleteGoogleAuthView.get(), which will
-        # handle the redirect back from the Google's OAuth2.0 server, to
-        # Flow object constructor.
+        # the parameter value from CompleteGoogleAuthView.get(), which
+        # will handle the redirect back from the Google's OAuth2.0
+        # server, to Flow object constructor.
         request.session["state"] = state
         request.session.modified = True
         return HttpResponseRedirect(auth_url)
