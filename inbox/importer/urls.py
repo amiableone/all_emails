@@ -3,7 +3,7 @@ from django.urls import path
 
 from . import views
 
-appname = "importer"
+app_name = "importer"
 urlpatterns = [
     path(
         "login/",
