@@ -16,6 +16,7 @@ from .utils import (
 
 
 class EmailsView(ListView):
+    context_object_name = "emails"
     paginate_by = 100
     template_name = "emails.html"
 
