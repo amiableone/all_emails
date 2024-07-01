@@ -1,0 +1,30 @@
+{% extends "base.html" %}
+
+{% block title %}Все письма{% endblock %}
+
+{% block content %}
+
+<a href="{% url='importer:add-account' %">Добавить аккаунт</a>
+
+<table>
+    <tr>
+        <th>Аккаунт</th>
+        <th>Ящик</th>
+        <th>Тема</th>
+        <th>Текст</th>
+        <th>Файлы</th>
+        <th>Дата</th>
+    </tr>
+    {% for email in emails %}
+    <tr>
+        <td>email.account</td>
+        <td>email.box</td>
+        <td>email.subject</td>
+        <td>email.body</td>
+        <td>EMPTY_FOR_NOW</td>
+        <td>email.date</td>
+    </tr>
+    {% endfor %}
+</table>
+
+{% endblock %}
