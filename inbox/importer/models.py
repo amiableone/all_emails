@@ -29,14 +29,17 @@ fields=["user", "email"],
 
 
 class Message(models.Model):
+    class Box(models.TextChoices):
+        INBOX = "inbox"
+        OUTBOX = "outbox"
     account = models.ForeignKey(
         Account,
         on_delete=models.CASCADE,
         related_name="messages",
     )
     subject = models.CharField(max_length=255)
-    date_sent = models.DateTimeField()
-    date_received = models.DateTimeField()
+    box = models.CharField(choices=Box, default=Box.INBOX)
+    date = models.DateTimeField()
     body = models.TextField()
     attachments = models.FileField(
         upload_to="attachments/%Y/%m/%d/",
