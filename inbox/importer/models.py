@@ -30,8 +30,8 @@ fields=["user", "email"],
 
 class Message(models.Model):
     class Box(models.TextChoices):
-        INBOX = "inbox"
-        OUTBOX = "outbox"
+        INBOX = "inbox", "Входящие"
+        OUTBOX = "outbox", "Отправленные"
     account = models.ForeignKey(
         Account,
         on_delete=models.CASCADE,
