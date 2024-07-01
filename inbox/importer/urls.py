@@ -22,5 +22,9 @@ urlpatterns = [
         views.CompleteGoogleAuthView.as_view(),
         name="complete-google-oauth",
     ),
-    path("create-gmail/", view.CreateAccount.as_view(), name="create-gmail" ),
+    path(
+        "create-gmail/",
+        views.CreateAccountView.as_view(),
+        name="create-gmail" ,
+    ),
 ]
