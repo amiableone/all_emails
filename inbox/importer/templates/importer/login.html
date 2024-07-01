@@ -1,12 +1,12 @@
 {% extends "base.html" %}
 
-{% block title %}Login{% endblock %}
+{% block title %}Вход{% endblock %}
 
 {% block content %}
 
 {% if form.errors %}
     <p>Не получилось авторизоваться. Попробуйте снова.</p>
-{% elseif next %}
+{% elif next %}
     <p>Сначала авторизуйтесь</p>
 {% endif %}
 
