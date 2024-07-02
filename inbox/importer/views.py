@@ -19,13 +19,13 @@ from .utils import (
 class SignupView(CreateView):
     form_class = UserCreationForm
     success_url = "/login/"
-    template_name = "signup.html"
+    template_name = "importer/signup.html"
 
 
 class EmailsView(ListView):
     context_object_name = "emails"
     paginate_by = 100
-    template_name = "emails.html"
+    template_name = "importer/emails.html"
 
     def get(self, request, *args, **kwargs):
         if not request.user.is_authenticated:
