@@ -1,0 +1,29 @@
+{% extends "base.html" %}
+
+{% block title %}Регистрация{% endblock %}
+
+{% block content %}
+
+<form method="post" action="{% url 'importer:signup' %}">
+    {% csrf_token %}
+    <table>
+        {% for field in form %}
+        <tr>
+            <th>{{ field.label_tag }}</th>
+            <td>{{ field }}</td>
+        </tr>
+        <tr colspan="2">
+            <td>{{ field.errors }}</td>
+        </tr>
+        {% endfor %}
+        <tr colspan="2">
+            <td>{{ form.non_field_errors }}</td>
+        </tr>
+    </table>
+
+    <input type="submit" value="Sign up">
+</form>
+
+<p><a href="{% url 'importer:login' %}">У меня уже есть аккаунт</a></p>
+
+{% endblock %}
