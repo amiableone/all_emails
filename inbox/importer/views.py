@@ -1,3 +1,4 @@
+from django.contrib.auth.forms import UserCreationForm
 from django.http import (
     HttpRequest,
     HttpResponseRedirect,
@@ -13,6 +14,12 @@ from .utils import (
     google_oauth2,
     google_oauth2_cb,
 )
+
+
+class SignupView(CreateView):
+    form_class = UserCreationForm
+    success_url = "/login/"
+    template_name = "signup.html"
 
 
 class EmailsView(ListView):
