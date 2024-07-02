@@ -5,6 +5,7 @@ from . import views
 
 app_name = "importer"
 urlpatterns = [
+    path("signup/", views.SignupView.as_view(), name="signup"),
     path(
         "login/",
         auth_views.LoginView.as_view(template_name="importer/login.html"),
