@@ -8,7 +8,10 @@ urlpatterns = [
     path("signup/", views.SignupView.as_view(), name="signup"),
     path(
         "login/",
-        auth_views.LoginView.as_view(template_name="importer/login.html"),
+        auth_views.LoginView.as_view(
+            next_page="/emails/",
+            template_name="importer/login.html",
+        ),
         name="login",
     ),
     path("emails/", views.EmailsView.as_view(), name="emails"),
