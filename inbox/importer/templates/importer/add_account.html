@@ -1,0 +1,29 @@
+{% extends "base.html" %}
+
+{% block title %}Добавить аккаунт{% endblock %}
+
+{% block content %}
+
+<form method="post" action="{% url 'importer:add-account' %}">
+    {% csrf_token %}
+    <table>
+        {% for field in form %}
+        <tr>
+            <th>{{ field.label_tag }}</th>
+            <td>{{ field }}</td>
+        </tr>
+        <tr colspan="2">
+            <td>{{ field.errors }}</td>
+        </tr>
+        {% endfor %}
+        <tr colspan="2">
+            <td>{{ form.non_field_errors }}</td>
+        </tr>
+    </table>
+
+    <input type="submit" value="Добавить">
+</form>
+
+<p><a href="{% url 'importer:emails' %}">На главную</a></p>
+
+{% endblock %}
