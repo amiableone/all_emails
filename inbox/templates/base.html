@@ -4,7 +4,11 @@
         <title>{% block title %}{% endblock %}</title>
     </head>
     <body>
-        <img src="{% static 'images/sitelogo.png' %}" alt="Logo">
-        {% block content %}{% endblock %}
+        <div class="logo">
+            <img src="{% static 'images/sitelogo.png' %}" alt="Logo">
+        </div>
+        <div>
+            {% block content %}{% endblock %}
+        </div>
     </body>
 </html>
