@@ -3,7 +3,7 @@ from django.http import (
     HttpRequest,
     HttpResponseRedirect,
 )
-from django.shortcuts import render
+from django.shortcuts import render, redirect
 from django.urls import reverse
 from django.views import View
 from django.views.generic import CreateView, ListView
@@ -14,6 +14,10 @@ from .utils import (
     google_oauth2,
     google_oauth2_cb,
 )
+
+
+def go_to_emails(*args, **kwargs):
+    return redirect(reverse("importer:emails"))
 
 
 class SignupView(CreateView):
