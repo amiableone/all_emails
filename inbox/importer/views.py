@@ -40,9 +40,11 @@ class EmailsView(ListView):
 
 class AddAccountView(View):
     form_class = AddAccountForm
+    template_name = "importer/add_account.html"
+
     def get(self, request, *args, **kwargs):
         form = self.form_class()
-        return render(request, "add_account.html", {"form": form})
+        return render(request, self.template_name, {"form": form})
 
     def post(self, request, *args, **kwargs):
         form = self.form_class(request.POST)
@@ -52,7 +54,7 @@ class AddAccountView(View):
             request.session["platform"] = platform
             request.session["email_account"] = email
             return HttpResponseRedirect(reverse("importer:add-gmail"))
-        return render(request, "add_account.html", {"form": form})
+        return render(request, self.template_name, {"form": form})
 
 
 class GoogleAuthView(View):
