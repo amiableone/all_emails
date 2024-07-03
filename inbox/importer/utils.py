@@ -1,6 +1,9 @@
 from google_auth_oauthlib.flow import Flow
+from pathlib import Path
 
-CLIENT_SECRET = "../../client_secret.json"
+from django.conf import settings
+
+CLIENT_SECRET = settings.BASE_DIR.parent / "client_secret.json"
 SCOPES = ["https://www.googleapis.com/auth/gmail.readonly"]
 
 
